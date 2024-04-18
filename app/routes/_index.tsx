@@ -1,7 +1,7 @@
 import { Box, FormControl, TextField, Button } from "@mui/material";
 import type { MetaFunction } from "@remix-run/node";
-import { useEffect } from "react";
-import DataSchemaTextField from "../components/DataSchemaTextField";
+import { useEffect, useState } from "react";
+import DataSchemaInputField from "../components/DataSchemaInputField";
 
 export const meta: MetaFunction = () => {
   return [
@@ -43,12 +43,21 @@ to this Object:
 function parseStringToObject(str: string) {
   //
   let obj = str;
-  return obj;
+  let lines = str.split("\n");
+  lines = lines.filter((line) => line !== "");
+  console.log(lines);
+  return "end";
 }
 
 // TODO: Multiple URLs
 
 export default function Index() {
+  const [dataSchema, setDataSchema] = useState<string>(
+    `attribute1: value1
+  attribute2:
+    attribute3: value3
+`
+  );
   const str = `
 attribute1: value1
  attribute2:
@@ -61,7 +70,7 @@ attribute8: value8
 `;
 
   useEffect(() => {
-    console.log(parseStringToObject(str));
+    // console.log(parseStringToObject(str));
   }, []);
 
   return (
@@ -80,7 +89,10 @@ attribute8: value8
             <Button variant="contained">Add Attribute</Button>
           </Box>
           <Box sx={{ padding: "1rem" }}>
-            <DataSchemaTextField />
+            <DataSchemaInputField
+              value={dataSchema}
+              changeValue={setDataSchema}
+            />
           </Box>
         </Box>
       </FormControl>
