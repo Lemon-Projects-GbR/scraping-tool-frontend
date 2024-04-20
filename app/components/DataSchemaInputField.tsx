@@ -12,10 +12,11 @@ const DataSchemaInputField = ({
 }: DataSchemaInputFieldProps): JSX.Element => {
   return (
     <Editor
-      height={300}
+      height={200}
       width={500}
       language="javascript"
       theme="vs-dark"
+      options={{ minimap: { enabled: false } }}
       value={value}
       onChange={(value) => changeValue(value || "")}
     />
