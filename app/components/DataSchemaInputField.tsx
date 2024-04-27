@@ -6,6 +6,9 @@ type DataSchemaInputFieldProps = {
   changeValue: Dispatch<SetStateAction<string>>;
 };
 
+// TODO: highlight of a key is used multiple times (an forbid)
+//TODO: disable autocomplete
+//TODO: highlight to double indentation (and forbid)
 const DataSchemaInputField = ({
   value,
   changeValue,

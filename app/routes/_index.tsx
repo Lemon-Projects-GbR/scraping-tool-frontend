@@ -1,4 +1,4 @@
-import { Box, FormControl, TextField, Button } from "@mui/material";
+import { Box, FormControl, TextField, Button, Typography } from "@mui/material";
 import type { MetaFunction } from "@remix-run/node";
 import { useEffect, useState } from "react";
 import DataSchemaInputField from "../components/DataSchemaInputField";
@@ -12,6 +12,7 @@ export const meta: MetaFunction = () => {
 };
 
 // TODO: Multiple URLs
+// TODO: Save schema feature
 
 export default function Index() {
   const [dataSchema, setDataSchema] = useState<string>(
@@ -25,21 +26,29 @@ attribute2:
     { name: "url0", value: "" },
   ]);
 
+  const [attributes, setAttributes] = useState<
+    { inputName: string; value: { attrName: string; attrValue: string } }[]
+  >([{ inputName: "name0", value: { attrName: "", attrValue: "" } }]);
+
   const submitHandler = async () => {
     console.log(parseSchemaString(dataSchema));
     // parseSchemaString(dataSchema);
   };
 
-  const addUrl = (index: number) => {
+  const addUrl = (index: number): void => {
     setUrls([...urls, { name: "url" + index, value: "" }]);
   };
 
-  const addCategory = (index: number) => {};
+  const addAttribute = (index: number): void => {
+    setAttributes([
+      ...attributes,
+      { inputName: "name" + index, value: { attrName: "", attrValue: "" } },
+    ]);
+  };
 
   useEffect(() => {
-    // console.log(parseStringToObject(str));
-    console.log(urls);
-  }, [urls]);
+    console.log(attributes);
+  }, [attributes]);
 
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
@@ -48,6 +57,16 @@ attribute2:
           <Box
             sx={{ padding: "1rem", display: "flex", flexDirection: "column" }}
           >
+            <Box
+              sx={{ padding: "1rem", display: "flex", flexDirection: "column" }}
+            >
+              <TextField label="Titel" variant="outlined" name="title" />
+              <TextField
+                label="Other Field"
+                variant="outlined"
+                name="replace"
+              />
+            </Box>
             {urls.map((url, index) => (
               <Box
                 key={index}
@@ -85,12 +104,68 @@ attribute2:
                 id="base1"
               />
             </Box>
-            <Box sx={{ display: "flex" }}>
-              <TextField label="Category" variant="outlined" id="cat1" />
-              <TextField label="Selector" variant="outlined" id="sel1" />
-            </Box>
-            <Button variant="contained">Add Attribute</Button>
+            <Typography variant="body1">Hardcoded Attributes</Typography>
+            {attributes.map((attr, index) => (
+              <Box
+                key={index}
+                sx={{ display: "flex", flexDirection: "column" }}
+              >
+                <Box sx={{ display: "flex" }}>
+                  <TextField
+                    label="Name"
+                    variant="outlined"
+                    name={attr.inputName}
+                    value={attr.value.attrName}
+                    onChange={(e) => {
+                      setAttributes((prevState) =>
+                        prevState.map((attr) => {
+                          if (attr.inputName === e.target.name) {
+                            return {
+                              inputName: e.target.name,
+                              value: {
+                                attrName: e.target.value,
+                                selector: attr.value.selector,
+                              },
+                            };
+                          }
+                          return attr;
+                        })
+                      );
+                    }}
+                  />
+                  <TextField
+                    label="Value"
+                    variant="outlined"
+                    name={attr.inputName}
+                    value={attr.value.attrValue}
+                    onChange={(e) => {
+                      setAttributes((prevState) =>
+                        prevState.map((attr) => {
+                          if (attr.inputName === e.target.name) {
+                            return {
+                              inputName: e.target.name,
+                              value: {
+                                attrName: attr.value.attrName,
+                                attrValue: e.target.value,
+                              },
+                            };
+                          }
+                          return attr;
+                        })
+                      );
+                    }}
+                  />
+                </Box>
+              </Box>
+            ))}
+            <Button
+              variant="contained"
+              onClick={() => addAttribute(attributes.length)}
+            >
+              Add Attribute
+            </Button>
           </Box>
+
           <Box sx={{ padding: "1rem" }}>
             <DataSchemaInputField
               value={dataSchema}
