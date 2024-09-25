@@ -7,7 +7,7 @@ function removeTrailingComma(str: string): string {
 // }
 
 export function parseSchemaString(
-  str: string
+  str: string,
 ): Record<string, string | object> {
   let lines = str.split("\n");
   lines = lines.filter((line) => line !== "");

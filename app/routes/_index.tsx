@@ -1,13 +1,13 @@
-import { Box, FormControl, TextField, Button, Typography } from "@mui/material";
-import type { MetaFunction } from "@remix-run/node";
-import { useEffect, useState } from "react";
-import DataSchemaInputField from "../components/DataSchemaInputField";
-import { parseSchemaString } from "~/utils/parseSchemaString";
+import { Box, FormControl, TextField, Button, Typography } from '@mui/material';
+import type { MetaFunction } from '@remix-run/node';
+import { useEffect, useState } from 'react';
+import DataSchemaInputField from '../components/DataSchemaInputField';
+import { parseSchemaString } from '~/utils/parseSchemaString';
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "New Remix App" },
-    { name: "description", content: "Welcome to Remix!" },
+    { title: 'New Remix App' },
+    { name: 'description', content: 'Welcome to Remix!' },
   ];
 };
 
@@ -19,16 +19,19 @@ export default function Index() {
     `attribute1: value1
 attribute2:
   attribute3: value3
-`
+`,
   );
 
   const [urls, setUrls] = useState<{ name: string; value: string }[]>([
-    { name: "url0", value: "" },
+    { name: 'url0', value: '' },
   ]);
 
   const [attributes, setAttributes] = useState<
-    { inputName: string; value: { attrName: string; attrValue: string } }[]
-  >([{ inputName: "name0", value: { attrName: "", attrValue: "" } }]);
+    {
+      inputName: string;
+      value: { attrName: string; attrValue: string };
+    }[]
+  >([{ inputName: 'name0', value: { attrName: '', attrValue: '' } }]);
 
   const submitHandler = async () => {
     console.log(parseSchemaString(dataSchema));
@@ -36,13 +39,16 @@ attribute2:
   };
 
   const addUrl = (index: number): void => {
-    setUrls([...urls, { name: "url" + index, value: "" }]);
+    setUrls([...urls, { name: 'url' + index, value: '' }]);
   };
 
   const addAttribute = (index: number): void => {
     setAttributes([
       ...attributes,
-      { inputName: "name" + index, value: { attrName: "", attrValue: "" } },
+      {
+        inputName: 'name' + index,
+        value: { attrName: '', attrValue: '' },
+      },
     ]);
   };
 
@@ -51,35 +57,56 @@ attribute2:
   }, [attributes]);
 
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
+    <div
+      style={{
+        fontFamily: 'system-ui, sans-serif',
+        lineHeight: '1.8',
+      }}
+    >
       <FormControl>
-        <Box sx={{ display: "flex", justifyContent: "space-around" }}>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-around',
+          }}
+        >
           <Box
-            sx={{ padding: "1rem", display: "flex", flexDirection: "column" }}
+            sx={{
+              padding: '1rem',
+              display: 'flex',
+              flexDirection: 'column',
+            }}
           >
             <Box
-              sx={{ padding: "1rem", display: "flex", flexDirection: "column" }}
+              sx={{
+                padding: '1rem',
+                display: 'flex',
+                flexDirection: 'column',
+              }}
             >
-              <TextField label="Titel" variant="outlined" name="title" />
+              <TextField label='Titel' variant='outlined' name='title' />
               <TextField
-                label="Other Field"
-                variant="outlined"
-                name="replace"
+                label='Other Field'
+                variant='outlined'
+                name='replace'
               />
             </Box>
             {urls.map((url, index) => (
               <Box
                 key={index}
-                sx={{ display: "flex", flexDirection: "column" }}
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}
               >
                 <TextField
-                  label="URL"
-                  variant="outlined"
-                  name={"url" + index}
+                  label='URL'
+                  variant='outlined'
+                  name={'url' + index}
                   value={url.value}
-                  onChange={(e) => {
-                    setUrls((prevState) =>
-                      prevState.map((url) => {
+                  onChange={e => {
+                    setUrls(prevState =>
+                      prevState.map(url => {
                         if (url.name === e.target.name) {
                           return {
                             name: e.target.name,
@@ -87,38 +114,50 @@ attribute2:
                           };
                         }
                         return url;
-                      })
+                      }),
                     );
                   }}
                 />
                 {/* TODO: place icon to remove url input */}
               </Box>
             ))}
-            <Button variant="contained" onClick={() => addUrl(urls.length)}>
+            <Button variant='contained' onClick={() => addUrl(urls.length)}>
               Add URL
             </Button>
-            <Box sx={{ display: "flex", flexDirection: "column" }}>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+              }}
+            >
               <TextField
-                label="Base Container (Selector)"
-                variant="outlined"
-                id="base1"
+                label='Base Container (Selector)'
+                variant='outlined'
+                id='base1'
               />
             </Box>
-            <Typography variant="body1">Hardcoded Attributes</Typography>
+            <Typography variant='body1'>Hardcoded Attributes</Typography>
             {attributes.map((attr, index) => (
               <Box
                 key={index}
-                sx={{ display: "flex", flexDirection: "column" }}
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}
               >
-                <Box sx={{ display: "flex" }}>
+                <Box
+                  sx={{
+                    display: 'flex',
+                  }}
+                >
                   <TextField
-                    label="Name"
-                    variant="outlined"
+                    label='Name'
+                    variant='outlined'
                     name={attr.inputName}
                     value={attr.value.attrName}
-                    onChange={(e) => {
-                      setAttributes((prevState) =>
-                        prevState.map((attr) => {
+                    onChange={e => {
+                      setAttributes(prevState =>
+                        prevState.map(attr => {
                           if (attr.inputName === e.target.name) {
                             return {
                               inputName: e.target.name,
@@ -129,18 +168,18 @@ attribute2:
                             };
                           }
                           return attr;
-                        })
+                        }),
                       );
                     }}
                   />
                   <TextField
-                    label="Value"
-                    variant="outlined"
+                    label='Value'
+                    variant='outlined'
                     name={attr.inputName}
                     value={attr.value.attrValue}
-                    onChange={(e) => {
-                      setAttributes((prevState) =>
-                        prevState.map((attr) => {
+                    onChange={e => {
+                      setAttributes(prevState =>
+                        prevState.map(attr => {
                           if (attr.inputName === e.target.name) {
                             return {
                               inputName: e.target.name,
@@ -151,7 +190,7 @@ attribute2:
                             };
                           }
                           return attr;
-                        })
+                        }),
                       );
                     }}
                   />
@@ -159,21 +198,21 @@ attribute2:
               </Box>
             ))}
             <Button
-              variant="contained"
+              variant='contained'
               onClick={() => addAttribute(attributes.length)}
             >
               Add Attribute
             </Button>
           </Box>
 
-          <Box sx={{ padding: "1rem" }}>
+          <Box sx={{ padding: '1rem' }}>
             <DataSchemaInputField
               value={dataSchema}
               changeValue={setDataSchema}
             />
           </Box>
         </Box>
-        <Button variant="contained" onClick={submitHandler}>
+        <Button variant='contained' onClick={submitHandler}>
           Submit
         </Button>
       </FormControl>

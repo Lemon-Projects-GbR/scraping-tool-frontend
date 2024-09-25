@@ -20,6 +20,7 @@
     "@remix-run/serve": "^2.8.1",
     "@uiw/codemirror-theme-vscode": "^4.21.25",
     "@uiw/react-codemirror": "^4.21.25",
+    "axios": "^1.7.7",
     "isbot": "^4.1.0",
     "react": "18.3.0-canary-a870b2d54-20240314",
     "react-dom": "18.3.0-canary-a870b2d54-20240314"
@@ -40,6 +41,7 @@
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "prettier": "3.3.3",
     "typescript": "^5.1.6",
     "vite": "^5.1.0",
     "vite-tsconfig-paths": "^4.2.1"
