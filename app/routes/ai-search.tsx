@@ -45,7 +45,7 @@ const AiSearch: FC = () => {
           style={{ marginTop: '16px' }}
           onClick={async () => {
             try {
-              axios.post(
+              const res = await axios.post(
                 `${data.API_BASE_URL}/ai-search`,
                 {
                   url: url,
@@ -57,6 +57,9 @@ const AiSearch: FC = () => {
                   },
                 },
               );
+
+              console.log('Success');
+              console.log(res.data);
             } catch (error) {
               console.log(error);
             }
