@@ -1,6 +1,7 @@
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import { Box, FormControl, TextField, Button, Typography } from '@mui/material';
 import type { MetaFunction } from '@remix-run/node';
-import { useEffect, useState } from 'react';
 import DataSchemaInputField from '../components/DataSchemaInputField';
 import { parseSchemaString } from '~/utils/parseSchemaString';
 
@@ -13,6 +14,12 @@ export const meta: MetaFunction = () => {
 
 // TODO: Multiple URLs
 // TODO: Save schema feature
+
+/* 
+title: $('.jumbotron > h2').text()
+attribute2:
+  productName: $('.title').text()
+*/
 
 export default function Index() {
   const [dataSchema, setDataSchema] = useState<string>(
@@ -29,13 +36,22 @@ attribute2:
   const [attributes, setAttributes] = useState<
     {
       inputName: string;
-      value: { attrName: string; attrValue: string };
+      value: { attrName: string; selector: string };
     }[]
-  >([{ inputName: 'name0', value: { attrName: '', attrValue: '' } }]);
+  >([{ inputName: 'name0', value: { attrName: '', selector: '' } }]);
 
   const submitHandler = async () => {
-    console.log(parseSchemaString(dataSchema));
+    // console.log(parseSchemaString(dataSchema));
     // parseSchemaString(dataSchema);
+
+    try {
+      const response = await axios.post('http://localhost:3008', {
+        urls: urls.filter(url => url.value !== '').map(url => url.value),
+        schema: parseSchemaString(dataSchema),
+      });
+    } catch (error) {
+      console.error('Error submitting data:', error);
+    }
   };
 
   const addUrl = (index: number): void => {
@@ -47,7 +63,7 @@ attribute2:
       ...attributes,
       {
         inputName: 'name' + index,
-        value: { attrName: '', attrValue: '' },
+        value: { attrName: '', selector: '' },
       },
     ]);
   };
@@ -176,7 +192,7 @@ attribute2:
                     label='Value'
                     variant='outlined'
                     name={attr.inputName}
-                    value={attr.value.attrValue}
+                    value={attr.value.selector}
                     onChange={e => {
                       setAttributes(prevState =>
                         prevState.map(attr => {
@@ -185,7 +201,7 @@ attribute2:
                               inputName: e.target.name,
                               value: {
                                 attrName: attr.value.attrName,
-                                attrValue: e.target.value,
+                                selector: e.target.value,
                               },
                             };
                           }
