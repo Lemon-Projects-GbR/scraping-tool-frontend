@@ -12,8 +12,8 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-// TODO: Multiple URLs
-// TODO: Save schema feature
+// TODO: Save scheme feature
+// TODO: Hardcoded attributes
 
 /* 
 title: $('.jumbotron > h2').text()
@@ -22,7 +22,7 @@ attribute2:
 */
 
 export default function Index() {
-  const [dataSchema, setDataSchema] = useState<string>(
+  const [dataScheme, setDataScheme] = useState<string>(
     `attribute1: value1
 attribute2:
   attribute3: value3
@@ -33,6 +33,9 @@ attribute2:
     { name: 'url0', value: '' },
   ]);
 
+  const [baseContainerSelector, setBaseContainerSelector] =
+    useState<string>('');
+
   const [attributes, setAttributes] = useState<
     {
       inputName: string;
@@ -41,14 +44,14 @@ attribute2:
   >([{ inputName: 'name0', value: { attrName: '', selector: '' } }]);
 
   const submitHandler = async () => {
-    // console.log(parseSchemaString(dataSchema));
-    // parseSchemaString(dataSchema);
-
     try {
       const response = await axios.post('http://localhost:3008', {
         urls: urls.filter(url => url.value !== '').map(url => url.value),
-        schema: parseSchemaString(dataSchema),
+        baseContainer: baseContainerSelector,
+        scheme: parseSchemaString(dataScheme),
       });
+
+      console.log(response.data);
     } catch (error) {
       console.error('Error submitting data:', error);
     }
@@ -79,7 +82,7 @@ attribute2:
         lineHeight: '1.8',
       }}
     >
-      <FormControl>
+      <FormControl sx={{ width: '100%' }}>
         <Box
           sx={{
             display: 'flex',
@@ -91,22 +94,9 @@ attribute2:
               padding: '1rem',
               display: 'flex',
               flexDirection: 'column',
+              // alignItems: 'center',
             }}
           >
-            <Box
-              sx={{
-                padding: '1rem',
-                display: 'flex',
-                flexDirection: 'column',
-              }}
-            >
-              <TextField label='Titel' variant='outlined' name='title' />
-              <TextField
-                label='Other Field'
-                variant='outlined'
-                name='replace'
-              />
-            </Box>
             {urls.map((url, index) => (
               <Box
                 key={index}
@@ -150,6 +140,8 @@ attribute2:
                 label='Base Container (Selector)'
                 variant='outlined'
                 id='base1'
+                value={baseContainerSelector}
+                onChange={e => setBaseContainerSelector(e.target.value)}
               />
             </Box>
             <Typography variant='body1'>Hardcoded Attributes</Typography>
@@ -223,8 +215,8 @@ attribute2:
 
           <Box sx={{ padding: '1rem' }}>
             <DataSchemaInputField
-              value={dataSchema}
-              changeValue={setDataSchema}
+              value={dataScheme}
+              changeValue={setDataScheme}
             />
           </Box>
         </Box>

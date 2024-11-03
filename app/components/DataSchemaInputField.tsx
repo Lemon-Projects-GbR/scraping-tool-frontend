@@ -15,7 +15,7 @@ const DataSchemaInputField = ({
 }: DataSchemaInputFieldProps): JSX.Element => {
   return (
     <Editor
-      height={200}
+      height={400}
       width={500}
       language="javascript"
       theme="vs-dark"

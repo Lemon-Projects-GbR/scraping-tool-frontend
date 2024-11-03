@@ -11,19 +11,23 @@
     "typecheck": "tsc"
   },
   "dependencies": {
-    "@emotion/react": "^11.11.4",
-    "@emotion/styled": "^11.11.5",
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
     "@monaco-editor/react": "^4.6.0",
-    "@mui/material": "^5.15.15",
+    "@mui/icons-material": "^6.1.6",
+    "@mui/material": "^6.1.6",
     "@remix-run/node": "^2.8.1",
     "@remix-run/react": "^2.8.1",
     "@remix-run/serve": "^2.8.1",
     "@uiw/codemirror-theme-vscode": "^4.21.25",
     "@uiw/react-codemirror": "^4.21.25",
     "axios": "^1.7.7",
+    "colors": "link:@mui/material/colors",
+    "esbuild": "^0.22.0",
     "isbot": "^4.1.0",
     "react": "18.3.0-canary-a870b2d54-20240314",
-    "react-dom": "18.3.0-canary-a870b2d54-20240314"
+    "react-dom": "18.3.0-canary-a870b2d54-20240314",
+    "styles": "link:@mui/material/styles"
   },
   "overrides": {
     "react": "18.3.0-canary-a870b2d54-20240314",
