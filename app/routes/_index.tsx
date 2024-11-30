@@ -45,7 +45,7 @@ attribute2:
 
   const submitHandler = async () => {
     try {
-      const response = await axios.post('http://localhost:3008', {
+      const response = await axios.post('http://localhost:3008/query', {
         urls: urls.filter(url => url.value !== '').map(url => url.value),
         baseContainer: baseContainerSelector,
         scheme: parseSchemaString(dataScheme),
