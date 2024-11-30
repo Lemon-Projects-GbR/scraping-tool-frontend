@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Box, FormControl, TextField, Button, Typography } from '@mui/material';
 import type { MetaFunction } from '@remix-run/node';
@@ -21,7 +21,7 @@ attribute2:
   productName: $('.title').text()
 */
 
-export default function Index() {
+const Index: React.FC = () => {
   const [dataScheme, setDataScheme] = useState<string>(
     `attribute1: value1
 attribute2:
@@ -226,4 +226,6 @@ attribute2:
       </FormControl>
     </div>
   );
-}
+};
+
+export default Index;
